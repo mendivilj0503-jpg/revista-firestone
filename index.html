@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Datos de Firestore</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#121212;
+  color:white;
+  text-align:center;
+}
+
+.card{
+  background:#1e1e1e;
+  margin:10px auto;
+  padding:10px;
+  width:300px;
+  border-radius:10px;
+  text-align:left;
+}
+a{color:#1db954;}
+</style>
+
+</head>
+
+<body>
+
+<h1>Datos de Firestore</h1>
+
+<div id="datos"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD67S3KlZ_1Hnwz3zNAEQXP1NMLoOuqGcU",
+  authDomain: "revista-motose1.firebaseapp.com",
+  projectId: "revista-motose1",
+  storageBucket: "revista-motose1.firebasestorage.app",
+  messagingSenderId: "817683016600",
+  appId: "1:817683016600:web:8b4906e653cc9258c199ed"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 OBTENER DATOS
+async function obtenerDatos() {
+  const querySnapshot = await getDocs(collection(db, "accidentes"));
+
+  const contenedor = document.getElementById("datos");
+  contenedor.innerHTML = "";
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+
+    contenedor.innerHTML += `
+      <div class="card">
+        <p><b>Edad:</b> ${data.edad}</p>
+        <p><b>Exceso velocidad:</b> ${data.exceso_velocidad}</p>
+        <p><b>Fecha accidente:</b> ${data.fecha_accidente}</p>
+        <p><b>Lesiones:</b> ${data.lesiones}</p>
+        <p><b>Tipo:</b> ${data.tipo_accidente}</p>
+        <p><b>Ubicación:</b> ${data.ubicacion}</p>
+        <p><b>Usa casco:</b> ${data.usa_casco}</p>
+        <a href="${data.link}" target="_blank">Ver noticia</a>
+      </div>
+    `;
+  });
+}
+
+obtenerDatos();
+
+</script>
+
+</body>
+</html>
