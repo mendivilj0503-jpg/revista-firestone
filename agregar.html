@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Agregar accidente</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#121212;
+  color:white;
+  text-align:center;
+}
+
+input{
+  padding:10px;
+  margin:5px;
+  border-radius:20px;
+  border:none;
+  width:250px;
+}
+
+button{
+  padding:10px;
+  border:none;
+  border-radius:20px;
+  background:#1db954;
+  color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Agregar accidente</h1>
+
+<input type="number" id="edad" placeholder="Edad"><br>
+<input type="text" id="exceso" placeholder="Exceso velocidad"><br>
+<input type="text" id="fecha" placeholder="Fecha accidente"><br>
+<input type="text" id="lesiones" placeholder="Lesiones"><br>
+<input type="text" id="tipo" placeholder="Tipo accidente"><br>
+<input type="text" id="ubicacion" placeholder="Ubicación"><br>
+<input type="text" id="casco" placeholder="Usa casco"><br>
+<input type="text" id="link" placeholder="Link noticia"><br>
+
+<button onclick="guardar()">Guardar</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD67S3KlZ_1Hnwz3zNAEQXP1NMLoOuqGcU",
+  authDomain: "revista-motose1.firebaseapp.com",
+  projectId: "revista-motose1",
+  storageBucket: "revista-motose1.firebasestorage.app",
+  messagingSenderId: "817683016600",
+  appId: "1:817683016600:web:8b4906e653cc9258c199ed"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 GUARDAR
+window.guardar = async function(){
+
+  await addDoc(collection(db, "accidentes"), {
+    edad: document.getElementById("edad").value,
+    exceso_velocidad: document.getElementById("exceso").value,
+    fecha_accidente: document.getElementById("fecha").value,
+    lesiones: document.getElementById("lesiones").value,
+    tipo_accidente: document.getElementById("tipo").value,
+    ubicacion: document.getElementById("ubicacion").value,
+    usa_casco: document.getElementById("casco").value,
+    link: document.getElementById("link").value
+  });
+
+  alert("Guardado");
+}
+
+</script>
+
+</body>
+</html>
